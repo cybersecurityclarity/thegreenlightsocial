@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Green Light Social — Bangkok 2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --green: #2e8b3a;
+      --green-light: #4caf50;
+      --green-glow: rgba(46, 139, 58, 0.25);
+      --white: #f4f4f0;
+      --black: #0a0a0a;
+      --gray: #1a1a1a;
+      --gray-mid: #2a2a2a;
+      --text-muted: #888;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(46,139,58,0.2);
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .nav-logo img {
+      height: 48px;
+      width: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1.5px solid var(--green);
+      box-shadow: 0 0 12px var(--green-glow);
+    }
+
+    .nav-event-info {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+
+    .nav-event-info .event-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.02em;
+    }
+
+    .nav-event-info .event-date {
+      font-size: 0.72rem;
+      color: var(--green-light);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .nav-right {
+      font-size: 0.72rem;
+      color: var(--green-light);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-align: right;
+      opacity: 0.85;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--green-light);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover { color: var(--green-light); }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* ── SECTIONS ── */
+    section { padding: 100px 40px; }
+
+    .container { max-width: 900px; margin: 0 auto; }
+
+    .section-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--green-light);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label::before {
+      content: '';
+      display: inline-block;
+      width: 28px;
+      height: 1px;
+      background: var(--green-light);
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 32px;
+      color: var(--white);
+    }
+
+    /* ── HOME / HERO ── */
+    #home {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding-top: 72px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #home::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 40%, rgba(46,139,58,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-logo {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 36px;
+      display: block;
+      border: 2px solid var(--green);
+      box-shadow: 0 0 40px var(--green-glow), 0 0 80px rgba(46,139,58,0.08);
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--green-light);
+      margin-bottom: 20px;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      margin-bottom: 28px;
+      color: var(--white);
+    }
+
+    .hero-title span {
+      color: var(--green-light);
+      font-style: italic;
+    }
+
+    .hero-banner {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 48px;
+      font-weight: 300;
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .pill-green {
+      border: 1px solid var(--green);
+      color: var(--green-light);
+      background: rgba(46,139,58,0.08);
+    }
+
+    .pill-white {
+      border: 1px solid rgba(244,244,240,0.2);
+      color: var(--text-muted);
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      animation: fadeInUp 2s ease 1s both;
+    }
+
+    .scroll-hint .arrow {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, transparent, var(--green-light));
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+      50% { opacity: 1; transform: scaleY(1); }
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      width: 60px;
+      height: 2px;
+      background: var(--green);
+      margin: 0 auto 48px;
+      border-radius: 1px;
+    }
+
+    /* ── ABOUT ── */
+    #about { background: var(--gray); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-top: 48px;
+    }
+
+    .about-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(46,139,58,0.15);
+      border-radius: 12px;
+      padding: 32px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .about-card:hover {
+      border-color: rgba(46,139,58,0.4);
+      box-shadow: 0 0 24px rgba(46,139,58,0.08);
+    }
+
+    .about-card-icon {
+      font-size: 1.8rem;
+      margin-bottom: 16px;
+    }
+
+    .about-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+      color: var(--white);
+    }
+
+    .about-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+
+    .about-main-text {
+      font-size: 1rem;
+      color: rgba(244,244,240,0.75);
+      line-height: 1.9;
+      margin-bottom: 24px;
+    }
+
+    .notice-box {
+      border-left: 2px solid var(--green);
+      padding: 20px 24px;
+      background: rgba(46,139,58,0.06);
+      border-radius: 0 8px 8px 0;
+      margin-top: 32px;
+    }
+
+    .notice-box p {
+      font-size: 0.88rem;
+      color: rgba(244,244,240,0.65);
+      line-height: 1.8;
+    }
+
+    /* ── VENUE ── */
+    #venue { text-align: center; }
+
+    .venue-placeholder {
+      margin: 48px auto 0;
+      max-width: 560px;
+      border: 1px dashed rgba(46,139,58,0.3);
+      border-radius: 16px;
+      padding: 60px 40px;
+      background: rgba(46,139,58,0.04);
+    }
+
+    .venue-placeholder .big-icon { font-size: 3rem; margin-bottom: 20px; }
+
+    .venue-placeholder h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      margin-bottom: 12px;
+      color: var(--white);
+    }
+
+    .venue-placeholder p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* ── ACTIVITIES ── */
+    #activities { background: var(--gray); }
+
+    .activities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 28px;
+      margin-top: 48px;
+    }
+
+    .activity-card {
+      background: var(--black);
+      border: 1px solid rgba(46,139,58,0.15);
+      border-radius: 14px;
+      padding: 36px 28px;
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    }
+
+    .activity-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.4), 0 0 20px rgba(46,139,58,0.1);
+      border-color: rgba(46,139,58,0.4);
+    }
+
+    .activity-card .icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(46,139,58,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+
+    .activity-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      margin-bottom: 12px;
+      color: var(--white);
+    }
+
+    .activity-card p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+
+    /* ── FAQ ── */
+    #faq { text-align: center; }
+
+    .faq-list {
+      margin-top: 48px;
+      text-align: left;
+      max-width: 680px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 28px 0;
+    }
+
+    .faq-item:first-child { border-top: 1px solid rgba(255,255,255,0.06); }
+
+    .faq-q {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      color: var(--white);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .faq-q::before {
+      content: 'Q';
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--green-light);
+      padding: 4px 8px;
+      border: 1px solid var(--green);
+      border-radius: 4px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .faq-a {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      padding-left: 38px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 40px;
+      border-top: 1px solid rgba(46,139,58,0.15);
+      font-size: 0.78rem;
+      color: rgba(136,136,136,0.5);
+      letter-spacing: 0.08em;
+    }
+
+    footer span { color: var(--green-light); }
+
+    /* ── FADE IN ANIMATIONS ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-content > * {
+      animation: fadeInUp 0.8s ease both;
+    }
+    .hero-content > *:nth-child(1) { animation-delay: 0.1s; }
+    .hero-content > *:nth-child(2) { animation-delay: 0.25s; }
+    .hero-content > *:nth-child(3) { animation-delay: 0.4s; }
+    .hero-content > *:nth-child(4) { animation-delay: 0.55s; }
+    .hero-content > *:nth-child(5) { animation-delay: 0.7s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .nav-right { font-size: 0.62rem; }
+      section { padding: 80px 24px; }
+      .about-grid { grid-template-columns: 1fr; }
+      .activities-grid { grid-template-columns: 1fr; }
+      .hero-title { font-size: 2.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <div class="nav-left">
+    <div class="nav-logo">
+      <img src="Gemini_Generated_Image_7mii407mii407mii.png" alt="The Green Light Social Logo" />
+    </div>
+    <div class="nav-event-info">
+      <span class="event-name">The Green Light Social</span>
+      <span class="event-date">June 5–7, 2026 &nbsp;·&nbsp; Bangkok, Thailand</span>
+    </div>
+  </div>
+
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#venue">Venue</a></li>
+    <li><a href="#activities">Activities</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+
+  <div class="nav-right">🌿 Strictly Invite Only<br/>Please share discreetly.</div>
+</nav>
+
+<!-- ══ HOME ══ -->
+<section id="home">
+  <div class="hero-content">
+    <img class="hero-logo" src="Gemini_Generated_Image_7mii407mii407mii.png" alt="Logo" />
+    <p class="hero-eyebrow">June 5–7, 2026 &nbsp;·&nbsp; Bangkok, Thailand</p>
+    <h1 class="hero-title">The <span>Green Light</span><br/>Social</h1>
+    <p class="hero-banner">
+      We dance, we enjoy the natural plants the earth provided for us, we hang out, eat good food — that simple&nbsp;:)
+    </p>
+    <div class="hero-meta">
+      <span class="pill pill-green">🌿 Mary Jane Friendly</span>
+      <span class="pill pill-white">💃 Dance Weekender</span>
+      <span class="pill pill-green">🔒 Invite Only</span>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="arrow"></div>
+  </div>
+</section>
+
+<!-- ══ ABOUT ══ -->
+<section id="about">
+  <div class="container">
+    <p class="section-label fade-up">About</p>
+    <h2 class="fade-up">A weekend for the<br/><em>good ones.</em></h2>
+
+    <p class="about-main-text fade-up">
+      Just a small, invite-only event where we dance and enjoy nature. The plan is to rent a house with a wood floor and a backyard where we can dance, play games, eat some good food, and relax for the weekend.
+    </p>
+    <p class="about-main-text fade-up">
+      No set schedule — think of this as a relaxed dance vacation. Feel free to go explore Bangkok throughout the day, but the hope is quality friend and community time in the evenings with dancing sprinkled in.
+    </p>
+
+    <div class="about-grid">
+      <div class="about-card fade-up">
+        <div class="about-card-icon">🤝</div>
+        <h3>Who's Invited?</h3>
+        <p>Invite-only isn't about exclusivity — it's about comfort. Feel free to bring whoever you'd like, but please make sure they're mary jane friendly, non-judgmental, and good vibes only.</p>
+      </div>
+      <div class="about-card fade-up">
+        <div class="about-card-icon">🔒</div>
+        <h3>Keep It Between Us</h3>
+        <p>It's important we all keep this a secret for personal, professional, and social reasons. Please take it seriously — don't share with or invite people who would share.</p>
+      </div>
+    </div>
+
+    <div class="notice-box fade-up">
+      <p>🌿 <strong style="color:var(--white)">A note on discretion:</strong> The nature of this gathering means we ask everyone to be mindful about who they tell and how they talk about it. This isn't paranoia — it's just good care for the people you love.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ VENUE ══ -->
+<section id="venue">
+  <div class="container">
+    <p class="section-label" style="justify-content:center;" >Venue</p>
+    <h2 class="fade-up">Where We'll Be</h2>
+    <div class="venue-placeholder fade-up">
+      <div class="big-icon">🏡</div>
+      <h3>Info Coming Soon</h3>
+      <p>We're securing the perfect spot — a house with wood floors, a backyard, and all the space we need to dance, relax, and be us. Stay tuned!</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ACTIVITIES ══ -->
+<section id="activities">
+  <div class="container">
+    <p class="section-label fade-up">Activities</p>
+    <h2 class="fade-up">What We're Getting Into</h2>
+
+    <div class="activities-grid">
+      <div class="activity-card fade-up">
+        <div class="icon">💃</div>
+        <h3>Dancing</h3>
+        <p>Friday, Saturday & Sunday nights are dance nights. We can hit the socials in Bangkok or host our own. Music will flow all weekend, and Saturday night we're likely bringing in a professional DJ — most likely Roman.</p>
+      </div>
+
+      <div class="activity-card fade-up">
+        <div class="icon">🎮</div>
+        <h3>Games</h3>
+        <p>Board games, chess, poker, Mario Kart — any and all games are welcome. Bring whatever you'd like! The more the merrier.</p>
+      </div>
+
+      <div class="activity-card fade-up">
+        <div class="icon">🍜</div>
+        <h3>Food</h3>
+        <p>The natural cravings shall occur, so we'll have plenty of food! Tune will be there — if we're nice to him, maybe he'll grace us with his amazing cooking. Plenty of snacks on deck too 😌</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FAQ ══ -->
+<section id="faq">
+  <div class="container">
+    <p class="section-label" style="justify-content:center;">FAQ</p>
+    <h2 class="fade-up">Got Questions?</h2>
+
+    <div class="faq-list">
+      <div class="faq-item fade-up">
+        <div class="faq-q">Can I bring a friend?</div>
+        <div class="faq-a">Sure thing! Just please make sure they're mary jane friendly, have a good vibe, and will keep this secret. That's really all we ask.</div>
+      </div>
+      <div class="faq-item fade-up">
+        <div class="faq-q">Will there be dancing?</div>
+        <div class="faq-a">For sure! Some attendees have already requested pure balboa, so we will absolutely have that — along with other styles. Dancing is the heart of this thing.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <p>🌿 <span>The Green Light Social</span> &nbsp;·&nbsp; June 5–7, 2026 &nbsp;·&nbsp; Bangkok, Thailand &nbsp;·&nbsp; Keep it between us.</p>
+</footer>
+
+<script>
+  // Intersection Observer for fade-up animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Active nav link highlight on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop - 100;
+      if (window.scrollY >= sectionTop) {
+        current = section.getAttribute('id');
+      }
+    });
+    navLinks.forEach(link => {
+      link.style.color = link.getAttribute('href') === `#${current}` ? 'var(--green-light)' : '';
+    });
+  });
+</script>
+
+</body>
+</html>
